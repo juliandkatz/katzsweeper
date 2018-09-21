@@ -1,21 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { Container } from 'semantic-ui-react'
+
+import Square from './Square'
+
+import './App.css'
+
+// SOME CONFIG
+const TOTAL_MINES = 10
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      totalMines: TOTAL_MINES
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <Container className="main-container">
+        <Container className="outer-box">
+          this is a test <Square content="bla" />
+        </Container>
+      </Container>
+    )
   }
 }
 
-export default App;
+export default App
