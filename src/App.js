@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Button } from 'semantic-ui-react'
 
 import './App.css'
 
@@ -17,7 +17,6 @@ class App extends Component {
       totalMines: TOTAL_MINES,
       bombMatrix: this.getBombMatrix()
     }
-
   }
 
   getBombMatrix (size=10) {
@@ -27,7 +26,11 @@ class App extends Component {
       matrix[y] = []
 
       for (let x = 0; x < size; x++) {
-        matrix[y][x] = 'x'       
+        matrix[y][x] = (
+          <div className='button-container'>
+            <Button floated='left' className='unpressed-button'></Button>
+          </div>
+        )
       }
     }
 
@@ -44,7 +47,6 @@ class App extends Component {
     return (
       <Container className="main-container">
         <Grid textAlign='center' verticalAlign='middle' className="outer-box">
-          this is a test
           <Grid.Column>
             {this.renderBombMatrix(this.state.bombMatrix)}
           </Grid.Column>
