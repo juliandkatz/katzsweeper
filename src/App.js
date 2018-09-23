@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Container } from 'semantic-ui-react'
-
-import Square from './Square'
+import { Container, Grid } from 'semantic-ui-react'
 
 import './App.css'
 
@@ -9,19 +7,48 @@ import './App.css'
 const TOTAL_MINES = 10
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
+
+    this.getBombMatrix = this.getBombMatrix.bind(this)
+    this.renderBombMatrix = this.renderBombMatrix.bind(this)
+
     this.state = {
-      totalMines: TOTAL_MINES
+      totalMines: TOTAL_MINES,
+      bombMatrix: this.getBombMatrix()
     }
+
   }
 
-  render() {
+  getBombMatrix (size=10) {
+    const matrix = []
+
+    for (let y = 0; y < size; y++) {
+      matrix[y] = []
+
+      for (let x = 0; x < size; x++) {
+        matrix[y][x] = 'x'       
+      }
+    }
+
+    return matrix
+  }
+
+  renderBombMatrix (matrix) {
+    return matrix.map(row => {
+      return <div>{row}</div>
+    })
+  }
+
+  render () {
     return (
       <Container className="main-container">
-        <Container className="outer-box">
-          this is a test <Square content="bla" />
-        </Container>
+        <Grid textAlign='center' verticalAlign='middle' className="outer-box">
+          this is a test
+          <Grid.Column>
+            {this.renderBombMatrix(this.state.bombMatrix)}
+          </Grid.Column>
+        </Grid>
       </Container>
     )
   }
