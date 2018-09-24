@@ -13,15 +13,13 @@ class App extends Component {
     super(props)
 
     this.getBombMatrix = this.getBombMatrix.bind(this)
-    this.renderBombMatrix = this.renderBombMatrix.bind(this)
+    this.renderMatrix = this.renderMatrix.bind(this)
 
     this.state = {
       totalMines: TOTAL_MINES,
       bombMatrix: this.getBombMatrix()
     }
   }
-
-
 
   getBombMatrix (size=10) {
     const matrix = []
@@ -30,17 +28,23 @@ class App extends Component {
       matrix[y] = []
 
       for (let x = 0; x < size; x++) {
-        matrix[y][x] = {}
+        matrix[y][x] = {
+          x: x,
+          y: y,
+          isBomb: false,
+          bombsAdjacent: 0,
+          displayText: ''
+        }
       }
     }
 
     return matrix
   }
 
-  renderBombMatrix (matrix) {
+  renderMatrix (matrix) {
     return matrix.map(row => {
       const renderedRow = row.map(spot => {
-        return <Square />
+        return <Square {...spot} />
       })
       return <div>{renderedRow}</div>
     })
@@ -51,7 +55,7 @@ class App extends Component {
       <Container className="main-container">
         <Grid textAlign='center' verticalAlign='middle' className="outer-box">
           <Grid.Column>
-            {this.renderBombMatrix(this.state.bombMatrix)}
+            {this.renderMatrix(this.state.bombMatrix)}
           </Grid.Column>
         </Grid>
       </Container>
