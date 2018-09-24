@@ -14,6 +14,7 @@ class App extends Component {
 
     this.getBombMatrix = this.getBombMatrix.bind(this)
     this.renderMatrix = this.renderMatrix.bind(this)
+    this.squarePressHandler = this.squarePressHandler.bind(this)
 
     this.state = {
       totalMines: TOTAL_MINES,
@@ -33,7 +34,9 @@ class App extends Component {
           y: y,
           isBomb: false,
           bombsAdjacent: 0,
-          displayText: ''
+          displayText: '',
+          isRevealed: false,
+          squarePressHandler: this.squarePressHandler
         }
       }
     }
@@ -47,6 +50,15 @@ class App extends Component {
         return <Square {...spot} />
       })
       return <div>{renderedRow}</div>
+    })
+  }
+
+  squarePressHandler (x, y) {
+    console.log('squarePressHandler ', x, y)
+    this.setState(state => {
+      const newState = Object.assign({}, state)
+      newState.bombMatrix[y][x].isRevealed = true
+      return newState
     })
   }
 
