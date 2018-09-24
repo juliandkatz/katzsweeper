@@ -8,20 +8,24 @@ class Square extends Component {
     super(props)
 
     this.handleClick = this.handleClick.bind(this)
+    this.getContent = this.getContent.bind(this)
   }
 
   handleClick () {
-    console.log('handleClick')
     this.props.squarePressHandler(this.props.x, this.props.y)
+  }
+
+  getContent () {
+    return this.props.isMine ? 'B' : this.props.minesAdjacent
   }
 
   render () {
     const content = this.props.isRevealed
-      ? <div className='revealed-square'>{this.props.displayText}</div>
+      ? <div className='revealed-square'>{this.getContent()}</div>
       : <Button floated='left' className='unpressed-button' onClick={this.handleClick}></Button>
 
     return (
-      <div className='button-container'> {content} </div>
+      <div className='button-container'>{content}</div>
     )
   }
 }
