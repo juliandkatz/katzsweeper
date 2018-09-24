@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Container, Grid, Button } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
+
+import Square from './Square.js'
 
 import './App.css'
 
@@ -19,6 +21,8 @@ class App extends Component {
     }
   }
 
+
+
   getBombMatrix (size=10) {
     const matrix = []
 
@@ -26,11 +30,7 @@ class App extends Component {
       matrix[y] = []
 
       for (let x = 0; x < size; x++) {
-        matrix[y][x] = (
-          <div className='button-container'>
-            <Button floated='left' className='unpressed-button'></Button>
-          </div>
-        )
+        matrix[y][x] = {}
       }
     }
 
@@ -39,7 +39,10 @@ class App extends Component {
 
   renderBombMatrix (matrix) {
     return matrix.map(row => {
-      return <div>{row}</div>
+      const renderedRow = row.map(spot => {
+        return <Square />
+      })
+      return <div>{renderedRow}</div>
     })
   }
 
