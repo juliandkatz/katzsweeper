@@ -16,4 +16,7 @@
 
 .revealed-square {
   float: left;
+  border-style: groove;
+  height: 100%;
+  width: 100%;
 }

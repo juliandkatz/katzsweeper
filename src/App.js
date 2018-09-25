@@ -38,7 +38,7 @@ class App extends Component {
           y: y,
           isMine: false,
           minesAdjacent: 0,
-          isRevealed: false,
+          isRevealed: true,
           squarePressHandler: this.squarePressHandler
         }
       }
@@ -57,7 +57,6 @@ class App extends Component {
   }
 
   squarePressHandler (x, y) {
-    console.log('squarePressHandler ', x, y)
     this.setState(state => {
       const newState = cloneDeep(state)
       newState.mineMatrix[y][x].isRevealed = true
@@ -66,7 +65,7 @@ class App extends Component {
   }
 
   populateMatrix (matrix, size, numberOfMines) {
-    const newMatrix = cloneDeep(matrix)
+    let newMatrix = cloneDeep(matrix)
     let remainingMines = numberOfMines
 
     while (remainingMines > 0) {
@@ -76,8 +75,25 @@ class App extends Component {
       if (!newMatrix[randomY][randomX].isMine) {
         newMatrix[randomY][randomX].isMine = true
         remainingMines--
+        newMatrix = this.addToNearbyMines(newMatrix, randomX, randomY)
       }
     }
+
+    return newMatrix
+  }
+
+  addToNearbyMines (origMatrix, mineX, mineY) {
+    const newMatrix = cloneDeep(origMatrix)
+    const coordinatePairs = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]]
+
+    coordinatePairs.forEach(pair => {
+      const [adjustX, adjustY] = pair
+      const nearbyX = mineX + adjustX
+      const nearbyY = mineY + adjustY
+
+      if (!newMatrix[nearbyY] || !newMatrix[nearbyY][nearbyX]) { return }
+      newMatrix[nearbyY][nearbyX].minesAdjacent++
+    })
 
     return newMatrix
   }

@@ -16,7 +16,11 @@ class Square extends Component {
   }
 
   getContent () {
-    return this.props.isMine ? 'B' : this.props.minesAdjacent
+    if (this.props.isMine) {
+      return 'B'
+    } else {
+      return this.props.minesAdjacent || ''
+    }
   }
 
   render () {
